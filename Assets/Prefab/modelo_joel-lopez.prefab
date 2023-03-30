@@ -2181,6 +2181,7 @@ GameObject:
   - component: {fileID: 243617266342962297}
   - component: {fileID: 243617266342962296}
   - component: {fileID: 243617266342962295}
+  - component: {fileID: -1626010737917492623}
   m_Layer: 0
   m_Name: modelo_joel-lopez
   m_TagString: AI
@@ -2269,7 +2270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e97f05a62f73aa4ca977a73321c1b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
   shotPoint: {fileID: 243617266618242732}
   seePlayer: {fileID: 243617266326097714}
   bulletTrailFirstPart: {fileID: 6670010285891972953, guid: 218f4960aea784c45b0c3086883bcda1,
@@ -2334,8 +2334,22 @@ MonoBehaviour:
   changeHealth: {fileID: 243617264825081254}
   isBot: 1
   playerTeleportAfterDeathPosition: {x: 0, y: 0, z: 0}
-  GameOverScreen: {fileID: 0}
+  GameOverScreen: {fileID: -1626010737917492623}
   canvas: {fileID: 0}
+--- !u!114 &-1626010737917492623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243617266342962294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06005a6f19bc8104b8838c73613dfd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsText: {fileID: 0}
+  points: 0
 --- !u!1 &243617266343748221
 GameObject:
   m_ObjectHideFlags: 0

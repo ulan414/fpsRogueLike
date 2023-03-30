@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsText: {fileID: 5564910467800708647}
+  points: 0
 --- !u!1 &5564910467800708645
 GameObject:
   m_ObjectHideFlags: 0

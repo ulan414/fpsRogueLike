@@ -68,6 +68,10 @@ namespace InfimaGames.LowPolyShooterPack
 		private bool sliding1;
 		private float lastSlideTime;
 		private Vector3 slide_dir;
+
+		private float lastHealTime;
+		private bool healing = false;
+		public Health Health;
 		/// <summary>
 		/// True if the character has its weapon holstered.
 		/// </summary>
@@ -148,6 +152,7 @@ namespace InfimaGames.LowPolyShooterPack
 		private bool holdingButtonRun;
 		//my
 		private bool holdingButtonSlide;
+		private bool holdingButtonHeal;
 		/// <summary>
 		/// True if the player is holding the firing button.
 		/// </summary>
@@ -210,6 +215,7 @@ namespace InfimaGames.LowPolyShooterPack
 			//Cache a reference to the overlay layer's index.
 			layerOverlay = characterAnimator.GetLayerIndex("Layer Overlay");
 			lastSlideTime = 0.0f;
+			lastHealTime = 0.0f;
 		}
 
 		protected override void Update()
@@ -219,6 +225,7 @@ namespace InfimaGames.LowPolyShooterPack
 			//Match Run.
 			running = holdingButtonRun && CanRun();
 			sliding = holdingButtonSlide && CanSlide();
+			
 			if (CanSlide() && Input.GetKey(KeyCode.LeftControl) && !sliding1)
             {
 				sliding1 = true;
@@ -241,10 +248,23 @@ namespace InfimaGames.LowPolyShooterPack
 				//characterAnimator.SetBool("Sliding", false);
 				characterAnimator.enabled = true;
 			}
-			if(Time.time - lastSlideTime > 1.5f && sliding1 == true)
+			if(Time.time - lastSlideTime > 1.5f && sliding1)
             {
 				lastSlideTime = 0.0f;
 				sliding1 = false;
+			}
+			
+			if(CanHeal() && Input.GetKey(KeyCode.X) && !healing)
+            {
+				healing = true;
+				lastHealTime = Time.time;
+				//make healing function
+				Health.AddHealth(20);
+			}
+			if(Time.time - lastHealTime > 1f && healing)
+            {
+				lastHealTime = 0.0f;
+				healing = false;
 			}
 			//Debug.Log(holdingButtonSlide);
 			//Debug.Log(sliding);
@@ -633,6 +653,22 @@ namespace InfimaGames.LowPolyShooterPack
 				return false;
 
 			//Return.
+			return true;
+		}
+		private bool CanHeal()
+        {
+			if (inspecting)
+				return false;
+
+			if (reloading || aiming)
+				return false;
+
+			if (holdingButtonFire && equippedWeapon.HasAmmunition())
+				return false;
+
+			if (axisMovement.y <= 0)
+				return false;
+
 			return true;
 		}
 

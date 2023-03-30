@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
+    [SerializeField] UpgradePanelManager upgradePanelManager;
     public Text pointsText;
     public int points = 0;
 
@@ -27,5 +28,10 @@ public class GameOverScreen : MonoBehaviour
     public void AddPoints(int point)
     {
         points = points + point;
+        if(points == 2)
+        {
+            points = 0;
+            upgradePanelManager.OpenPanel();
+        }
     }
 }

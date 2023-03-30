@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public sealed class AI : AIBehavior
 {
 	private float timer;
-	public GameObject Player;
+	//public GameObject Player;
+	
 	public Transform shotPoint;
 	public Transform seePlayer;
 	public TrailRenderer bulletTrailFirstPart;
@@ -54,9 +55,12 @@ public sealed class AI : AIBehavior
 	Vector3 playerPositionWhenShoot = new Vector3(0, 0, 0);
 	float lastLaserTime = 0f;
 	bool playones = false;
+	Vector3 Player = new Vector3(0, 0, 0);
+	private Transform Player1;
 	// Start is called before the first frame update
 	void Start()
 	{
+		
 		nav = GetComponent<NavMeshAgent>();
 		if (sniper)
 		{
@@ -64,19 +68,22 @@ public sealed class AI : AIBehavior
 			laserLineRenderer.SetPositions(initLaserPositions);
 			laserLineRenderer.SetWidth(laserWidth, laserWidth);
 		}
-
+		Player1 = GameObject.FindGameObjectWithTag("Player").transform;
+		
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-        if (!dying)
+		//Vector3 Player = GameObject.FindGameObjectWithTag("Player").transform.position;
+		Vector3 Player = Player1.position;
+		if (!dying)
         {
 			//make smthng
 			//return;
         
 		//laser
-		dist = Vector3.Distance(Player.transform.position, transform.position);
+		dist = Vector3.Distance(Player, transform.position);
 		if (dist > radius)
 		{
 			Idle();
@@ -121,9 +128,9 @@ public sealed class AI : AIBehavior
 
 			if (!mustShoot)
 			{
-				directionCor = (Player.transform.position - seePlayer.transform.position + new Vector3(0, 1.7f, 0)).normalized;
+				directionCor = (Player - seePlayer.transform.position + new Vector3(0, 1.7f, 0)).normalized;
 				//rotate character
-				directionCor1 = (Quaternion.AngleAxis(rotateAngle, transform.up) * (Player.transform.position - seePlayer.transform.position + new Vector3(0, 1.1f, 0))).normalized;
+				directionCor1 = (Quaternion.AngleAxis(rotateAngle, transform.up) * (Player - seePlayer.transform.position + new Vector3(0, 1.1f, 0))).normalized;
 			}
 			else	
             {
@@ -282,7 +289,7 @@ public sealed class AI : AIBehavior
 							if (hasSeenPlayer && !mustShoot)
 							{
 								nav.enabled = true;
-								nav.SetDestination(Player.transform.position);
+								nav.SetDestination(Player);
 								gameObject.GetComponent<Animator>().SetBool("run_back", false);
 								gameObject.GetComponent<Animator>().SetBool("Fire", false);
 								gameObject.GetComponent<Animator>().SetBool("idle", false);
@@ -302,7 +309,7 @@ public sealed class AI : AIBehavior
 							needToMove = true;
 							needToMoveTime = Time.time;
 							nav.enabled = true;
-							nav.SetDestination(Player.transform.position);
+							nav.SetDestination(Player);
 							gameObject.GetComponent<Animator>().SetBool("run_back", false);
 							gameObject.GetComponent<Animator>().SetBool("Fire", false);
 							gameObject.GetComponent<Animator>().SetBool("idle", false);
@@ -394,7 +401,7 @@ public sealed class AI : AIBehavior
 		if (!isReloading)
 		{
 			nav.enabled = true;
-			Vector3 back_pos = new Vector3(5 * transform.position.x - 4 * Player.transform.position.x, -0.2f, 5 * transform.position.z - 4 * Player.transform.position.z);
+			Vector3 back_pos = new Vector3(5 * transform.position.x - 4 * Player.x, -0.2f, 5 * transform.position.z - 4 * Player.z);
 			nav.SetDestination(back_pos);
 			gameObject.GetComponent<Animator>().SetBool("run_back", true);
 			gameObject.GetComponent<Animator>().SetBool("run", false);

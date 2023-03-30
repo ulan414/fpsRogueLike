@@ -10,6 +10,7 @@ TagManager:
   - metal
   - sand
   - Head
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

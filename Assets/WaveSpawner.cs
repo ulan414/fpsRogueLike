@@ -68,7 +68,6 @@ public class WaveSpawner : MonoBehaviour
                 return false;
             }
         }
-
         return true;
     }
 

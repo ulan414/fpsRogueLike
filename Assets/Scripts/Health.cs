@@ -13,14 +13,19 @@ public class Health : MonoBehaviour
     public HealthBar changeHealth;
     public bool isBot = true;
     public Vector3 playerTeleportAfterDeathPosition = new Vector3(0f,0f,0f);
-    public GameOverScreen GameOverScreen;
+    //public GameOverScreen GameOverScreen;
+    private GameObject DeathScreen;
     public GameObject canvas;
     float timer = 0f;
+    private GameOverScreen GameOverScreen;
     //script myScript;
     // Start is called before the first frame update
     void Start()
     {
         changeHealth.SetMaxHealth(maxHealth);
+        DeathScreen = GameObject.FindGameObjectWithTag("DeathScreen");
+        
+        GameOverScreen = DeathScreen.GetComponentInChildren<GameOverScreen>(true);
     }
 
     // Update is called once per frame
