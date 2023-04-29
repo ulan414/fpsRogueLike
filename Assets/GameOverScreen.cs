@@ -9,6 +9,12 @@ public class GameOverScreen : MonoBehaviour
     [SerializeField] UpgradePanelManager upgradePanelManager;
     public Text pointsText;
     public int points = 0;
+    public int level = 0;
+
+    [SerializeField] List<UpgradeData> upgrades;
+    List<UpgradeData> selectedUpgrades;
+
+    [SerializeField] List<UpgradeData> acquiredUpgrades;
 
     public void Setup()
     {
@@ -30,8 +36,40 @@ public class GameOverScreen : MonoBehaviour
         points = points + point;
         if(points == 2)
         {
+            if(selectedUpgrades == null) { selectedUpgrades = new List<UpgradeData>(); }
+            selectedUpgrades.Clear();
+            selectedUpgrades.AddRange(GetUpgrades(4));
+
+            upgradePanelManager.OpenPanel(selectedUpgrades);
             points = 0;
-            upgradePanelManager.OpenPanel();
+            level++;
         }
+    }
+
+    public List<UpgradeData> GetUpgrades(int count)
+    {
+        List<UpgradeData> upgradeList = new List<UpgradeData>();
+
+        if(count > upgrades.Count)
+        {
+            count = upgrades.Count;
+        }
+
+        for(int i = 0; i < count; i++)
+        {
+            upgradeList.Add(upgrades[Random.Range(0, upgrades.Count)]);
+        }
+
+        return upgradeList;
+    }
+
+    public void Upgrade(int selectedUpgradeId)
+    {
+        UpgradeData upgradeData = selectedUpgrades[selectedUpgradeId];
+
+        if(acquiredUpgrades == null) { acquiredUpgrades = new List<UpgradeData>(); }
+
+        acquiredUpgrades.Add(upgradeData);
+        upgrades.Remove(upgradeData);
     }
 }
