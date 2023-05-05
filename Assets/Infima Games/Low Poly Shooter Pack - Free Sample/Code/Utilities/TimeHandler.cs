@@ -71,7 +71,7 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// Toggle Pause.
         /// </summary>
-        private void Toggle()
+        public void Toggle()
         {
             //Toggle Pause.
             if (paused)

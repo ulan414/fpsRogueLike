@@ -72,6 +72,8 @@ namespace InfimaGames.LowPolyShooterPack
 		private float lastHealTime;
 		private bool healing = false;
 		public Health Health;
+
+		public bool grenadeThrowing = false;
 		/// <summary>
 		/// True if the character has its weapon holstered.
 		/// </summary>
@@ -235,12 +237,10 @@ namespace InfimaGames.LowPolyShooterPack
 				//slide_dir.Normalize();
 				Movement.SetSlideDir(slide_dir);
 				Movement.SetSliding(true);
-				Debug.Log(slide_dir);
 				//cameraWorld.transform.localPosition += Vector3.down * 0.5f;
 				characterAnimator.enabled = false;
 				arms.transform.localPosition += Vector3.down * 0.9f;
 				//arms.transform.localPosition = Vector3.Lerp(arms.transform.localPosition, Vector3.down*0.5f, Time.deltaTime * 6f);
-				Debug.Log(arms.transform.localPosition);
 			}
 			if (Time.time - lastSlideTime > 0.6f && sliding1 == true)
             {
@@ -503,6 +503,9 @@ namespace InfimaGames.LowPolyShooterPack
 			if (inspecting)
 				return false;
 
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
@@ -525,6 +528,9 @@ namespace InfimaGames.LowPolyShooterPack
 			//block if we have no ammunition
 			if (equippedWeapon.GetAmmunitionTotal() == 0)
 				return false;
+
+			if (grenadeThrowing)
+				return false;
 			//Return.
 			return true; 
 		}
@@ -542,7 +548,10 @@ namespace InfimaGames.LowPolyShooterPack
 			//Block.
 			if (inspecting)
 				return false;
-			
+
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
@@ -564,7 +573,10 @@ namespace InfimaGames.LowPolyShooterPack
 			//Block.
 			if (inspecting)
 				return false;
-			
+
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
@@ -585,7 +597,10 @@ namespace InfimaGames.LowPolyShooterPack
 			//Block.
 			if (inspecting)
 				return false;
-			
+
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
@@ -603,7 +618,10 @@ namespace InfimaGames.LowPolyShooterPack
 			//Block.
 			if (reloading || holstering)
 				return false;
-			
+
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
@@ -629,7 +647,9 @@ namespace InfimaGames.LowPolyShooterPack
 			//This blocks running backwards, or while fully moving sideways.
 			if (axisMovement.y <= 0 || Math.Abs(Mathf.Abs(axisMovement.x) - 1) < 0.01f)
 				return false;
-			
+
+			if (grenadeThrowing)
+				return false;
 			//Return.
 			return true;
 		}
@@ -652,12 +672,21 @@ namespace InfimaGames.LowPolyShooterPack
 			if (axisMovement.y <= 0 || Math.Abs(Mathf.Abs(axisMovement.x) - 1) < 0.01f)
 				return false;
 
+			if (grenadeThrowing)
+				return false;
+
 			//Return.
 			return true;
 		}
-		private bool CanHeal()
-        {
+		public bool CanThrowGrenade()
+		{
 			if (inspecting)
+				return false;
+
+			if (healing)
+				return false;
+
+			if (sliding)
 				return false;
 
 			if (reloading || aiming)
@@ -666,7 +695,29 @@ namespace InfimaGames.LowPolyShooterPack
 			if (holdingButtonFire && equippedWeapon.HasAmmunition())
 				return false;
 
-			if (axisMovement.y <= 0)
+/*			if (axisMovement.y < 0)
+				return false;*/
+
+			return true;
+		}
+		private bool CanHeal()
+        {
+			if (inspecting)
+				return false;
+
+			if (sliding)
+				return false;
+
+			if (reloading || aiming)
+				return false;
+
+			if (holdingButtonFire && equippedWeapon.HasAmmunition())
+				return false;
+
+			if (axisMovement.y < 0)
+				return false;
+
+			if (grenadeThrowing)
 				return false;
 
 			return true;
@@ -908,9 +959,9 @@ namespace InfimaGames.LowPolyShooterPack
 				//Performed.
 				case {phase: InputActionPhase.Performed}:
 					//Toggle the cursor locked value.
-					cursorLocked = !cursorLocked;
+					//cursorLocked = !cursorLocked;
 					//Update the cursor's state.
-					UpdateCursorState();
+					//UpdateCursorState();
 					break;
 			}
 		}

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InfimaGames.LowPolyShooterPack;
+using UnityEngine.InputSystem;
 
 public class MainMenuOpener : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class MainMenuOpener : MonoBehaviour
         pauseManager = GetComponent<PauseManager>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -20,17 +23,19 @@ public class MainMenuOpener : MonoBehaviour
             if (!panel.activeInHierarchy)
             {
                 OpenMenu();
+                panel.SetActive(true);
             }
             else
             {
                 CloseMenu();
+                panel.SetActive(false);
             }
         }
     }
     public void CloseMenu()
     {
-        pauseManager.UnPauseGame();
         panel.SetActive(false);
+        pauseManager.UnPauseGame();
     }
     public void OpenMenu()
     {

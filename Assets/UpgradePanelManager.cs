@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InfimaGames.LowPolyShooterPack;
 
 public class UpgradePanelManager : MonoBehaviour
 {
     public GameOverScreen GameOverScreen;
     [SerializeField] GameObject panel;
     PauseManager pauseManager;
-
     [SerializeField] List<UpgradeButton> upgradeButtons;
 
     private void Awake()
@@ -24,8 +24,8 @@ public class UpgradePanelManager : MonoBehaviour
     {
         Clean();
         pauseManager.PauseGame();
-        panel.SetActive(true);
         pauseManager.panelOpened = true;
+        panel.SetActive(true);
 
         for(int i = 0; i < upgraDatas.Count; i++)
         {
@@ -43,7 +43,6 @@ public class UpgradePanelManager : MonoBehaviour
     public void ClosePanel()
     {
         HideButtons();
-
         pauseManager.panelOpened = false;
         pauseManager.UnPauseGame();
         panel.SetActive(false);

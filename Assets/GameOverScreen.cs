@@ -7,19 +7,20 @@ using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField] UpgradePanelManager upgradePanelManager;
+    [SerializeField] PauseManager pauseManager;
     public Text pointsText;
     public int points = 0;
     public int level = 0;
 
     [SerializeField] List<UpgradeData> upgrades;
     List<UpgradeData> selectedUpgrades;
-
     [SerializeField] List<UpgradeData> acquiredUpgrades;
 
     public void Setup()
     {
         gameObject.SetActive(true);
         pointsText.text = points.ToString() + "  POINTS";
+        pauseManager.PauseGame();
     }
 
     public void RestartButton()
