@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using InfimaGames.LowPolyShooterPack;
 
 public class GameOverScreen : MonoBehaviour
 {
+    public GameObject Player;
+    public GameObject Skill;
+
+    public Weapon Gun;
+
+    public Health PlayerHealth;
+
     [SerializeField] UpgradePanelManager upgradePanelManager;
     [SerializeField] PauseManager pauseManager;
     public Text pointsText;
@@ -58,7 +67,7 @@ public class GameOverScreen : MonoBehaviour
 
         for(int i = 0; i < count; i++)
         {
-            upgradeList.Add(upgrades[Random.Range(0, upgrades.Count)]);
+            upgradeList.Add(upgrades[UnityEngine.Random.Range(0, upgrades.Count)]);
         }
 
         return upgradeList;
@@ -70,7 +79,32 @@ public class GameOverScreen : MonoBehaviour
 
         if(acquiredUpgrades == null) { acquiredUpgrades = new List<UpgradeData>(); }
 
-        acquiredUpgrades.Add(upgradeData);
+        if(upgradeData.upgradeType == UpgradeType.WeaponUnlock)
+        {
+            //enable script of the skill
+            string scriptName = upgradeData.Name;
+            Type scriptType = Type.GetType(scriptName);
+            MonoBehaviour scriptComponent = Player.GetComponent(scriptType) as MonoBehaviour;
+            scriptComponent.enabled = true;
+            //enable canva of the skill
+            Transform childTransform = Skill.transform.Find(scriptName);
+            if (childTransform != null)
+            {
+                // Enable the child GameObject
+                childTransform.gameObject.SetActive(true);
+            }
+        }
+        else if (upgradeData.upgradeType == UpgradeType.WeaponUpgrade)
+        {
+            Gun.AddDamage(upgradeData.AddDamage);
+            Gun.AddFireRate(upgradeData.AddFireDelay);
+        }
+        else if (upgradeData.upgradeType == UpgradeType.ItemUnlock)
+        {
+            PlayerHealth.AddMaxHealth(upgradeData.AddMaxHealth);
+        }
+
+            acquiredUpgrades.Add(upgradeData);
         upgrades.Remove(upgradeData);
     }
 }

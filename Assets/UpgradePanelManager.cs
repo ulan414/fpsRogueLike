@@ -10,6 +10,8 @@ public class UpgradePanelManager : MonoBehaviour
     PauseManager pauseManager;
     [SerializeField] List<UpgradeButton> upgradeButtons;
 
+    [SerializeField] GameObject HealthBar;
+
     private void Awake()
     {
         pauseManager = GetComponent<PauseManager>();
@@ -26,8 +28,9 @@ public class UpgradePanelManager : MonoBehaviour
         pauseManager.PauseGame();
         pauseManager.panelOpened = true;
         panel.SetActive(true);
+        HealthBar.SetActive(false);
 
-        for(int i = 0; i < upgraDatas.Count; i++)
+        for (int i = 0; i < upgraDatas.Count; i++)
         {
             upgradeButtons[i].gameObject.SetActive(true);
             upgradeButtons[i].Set(upgraDatas[i]);
@@ -46,7 +49,8 @@ public class UpgradePanelManager : MonoBehaviour
         pauseManager.panelOpened = false;
         pauseManager.UnPauseGame();
         panel.SetActive(false);
-        Debug.Log("close panel");
+        HealthBar.SetActive(true);
+
     }
 
     private void HideButtons()

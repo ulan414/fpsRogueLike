@@ -16,4 +16,8 @@ public class UpgradeData : ScriptableObject
     public UpgradeType upgradeType;
     public string Name;
     public Sprite icon;
+    public int AddDamage;
+    public int AddFireDelay;
+    public float Vampirism;
+    public int AddMaxHealth;
 }

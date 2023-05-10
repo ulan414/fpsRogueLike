@@ -16,7 +16,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
     public Wave[] waves;
-    private int nextWave = 0;
+    private int nextWave = -1;
 
     public float timeBetweenWaves = 5f;
     public float waveCountDown;
@@ -48,7 +48,14 @@ public class WaveSpawner : MonoBehaviour
         {
             if(state != SpawnState.SPAWNING)
             {
-                StartCoroutine(SpawnWave(waves[nextWave]));
+                if (waves.Length > nextWave + 1) {
+                    nextWave++;
+                    StartCoroutine(SpawnWave(waves[nextWave]));
+                }
+                else
+                {
+                    Debug.Log("You win!!!");
+                }
             }
         }
         else

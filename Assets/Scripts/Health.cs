@@ -18,8 +18,7 @@ public class Health : MonoBehaviour
     public GameObject canvas;
     float timer = 0f;
     private GameOverScreen GameOverScreen;
-    //script myScript;
-    // Start is called before the first frame update
+
     void Start()
     {
         changeHealth.SetMaxHealth(maxHealth);
@@ -28,11 +27,6 @@ public class Health : MonoBehaviour
         GameOverScreen = DeathScreen.GetComponentInChildren<GameOverScreen>(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void TakeDammage(int damage)
     {
         health -= damage;
@@ -101,5 +95,10 @@ public class Health : MonoBehaviour
             health = maxHealth;
         }
         changeHealth.SetHealth(health);
+    }
+    public void AddMaxHealth(int added)
+    {
+        maxHealth = maxHealth + maxHealth * added / 100;
+        changeHealth.SetMaxHealth(maxHealth);
     }
 }

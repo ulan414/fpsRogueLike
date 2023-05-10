@@ -228,6 +228,14 @@ namespace InfimaGames.LowPolyShooterPack
             }
             
         }
+        public void AddDamage(int damage)
+        {
+            damagee = damagee + damagee * (int)(damage / 100);
+        }
+        public void AddFireRate(int rate)
+        {
+            roundsPerMinutes = roundsPerMinutes + roundsPerMinutes * (int)(rate / 100);
+        }
         public override void Fire(float spreadMultiplier = 1.0f)
         {
             //We need a muzzle in order to fire this weapon!

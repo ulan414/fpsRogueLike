@@ -3844,7 +3844,7 @@ GameObject:
   - component: {fileID: 1812722235457562363}
   - component: {fileID: 1812722235457562362}
   - component: {fileID: 1812722235457562361}
-  - component: {fileID: -6987890060032538776}
+  - component: {fileID: -9212146211056141414}
   m_Layer: 0
   m_Name: swat (1)_1
   m_TagString: Untagged
@@ -3984,8 +3984,6 @@ MonoBehaviour:
   changeHealth: {fileID: 1812722234690915923}
   isBot: 1
   playerTeleportAfterDeathPosition: {x: 0, y: 0, z: 0}
-  GameOverScreen: {fileID: -1626010737917492623, guid: 7094e4b4eb3353344bf63a43d9a2abc2,
-    type: 3}
   canvas: {fileID: 0}
 --- !u!82 &1812722235457562361
 AudioSource:
@@ -4083,20 +4081,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-6987890060032538776
-MonoBehaviour:
+--- !u!136 &-9212146211056141414
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812722235457562360}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06005a6f19bc8104b8838c73613dfd61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointsText: {fileID: 0}
-  points: 0
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1812722235462767865
 GameObject:
   m_ObjectHideFlags: 0

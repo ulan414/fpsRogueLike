@@ -36,17 +36,20 @@ public class Grenade : MonoBehaviour
 
         foreach (Collider nearbyObject in colliders)
         {
-            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            //impulse
+/*            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if(rb != null)
             {
                 rb.AddExplosionForce(force, transform.position, radius);
-            }
+            }*/
             //damage
-            float dist = Vector3.Distance(nearbyObject.bounds.center, transform.position);
+            float dist = (Vector3.Distance(nearbyObject.bounds.center, transform.position) + 1f);
             Health health = nearbyObject.GetComponent<Health>();
             if (health != null)
             {
-                health.TakeDammage(50 * (int)dist);
+                Debug.Log("dist: " + dist);
+                health.TakeDammage(100 / (int)dist);
+                Debug.Log("damage: " + 100 / (int)dist);
             }
         }
 
