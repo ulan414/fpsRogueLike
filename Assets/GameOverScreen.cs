@@ -59,15 +59,28 @@ public class GameOverScreen : MonoBehaviour
     public List<UpgradeData> GetUpgrades(int count)
     {
         List<UpgradeData> upgradeList = new List<UpgradeData>();
+        HashSet<UpgradeData> uniqueNumbers = new HashSet<UpgradeData>();
 
-        if(count > upgrades.Count)
+        if (count > upgrades.Count)
         {
             count = upgrades.Count;
         }
 
         for(int i = 0; i < count; i++)
         {
-            upgradeList.Add(upgrades[UnityEngine.Random.Range(0, upgrades.Count)]);
+            //upgradeList.Add(upgrades[UnityEngine.Random.Range(0, upgrades.Count)]);
+            int randomNumber = UnityEngine.Random.Range(0, upgrades.Count);
+
+            if (!uniqueNumbers.Contains(upgrades[randomNumber]))
+            {
+                uniqueNumbers.Add(upgrades[randomNumber]);
+                upgradeList.Add(upgrades[randomNumber]);
+            }
+            else
+            {
+                i--;
+            }
+
         }
 
         return upgradeList;
@@ -82,7 +95,7 @@ public class GameOverScreen : MonoBehaviour
         if(upgradeData.upgradeType == UpgradeType.WeaponUnlock)
         {
             //enable script of the skill
-            string scriptName = upgradeData.Name;
+            string scriptName = upgradeData.ScriptName;
             Type scriptType = Type.GetType(scriptName);
             MonoBehaviour scriptComponent = Player.GetComponent(scriptType) as MonoBehaviour;
             scriptComponent.enabled = true;
@@ -104,7 +117,7 @@ public class GameOverScreen : MonoBehaviour
             PlayerHealth.AddMaxHealth(upgradeData.AddMaxHealth);
         }
 
-            acquiredUpgrades.Add(upgradeData);
+        acquiredUpgrades.Add(upgradeData);
         upgrades.Remove(upgradeData);
     }
 }

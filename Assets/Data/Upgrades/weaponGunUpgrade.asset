@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: weaponGunUpgrade
   m_EditorClassIdentifier: 
   upgradeType: 0
-  Name: AddGunDamage
+  ScriptName: AddGunDamage
+  Name: Deadly Strike
+  Description: +20% weapon damage.
   icon: {fileID: 21300000, guid: f8dfdee23d80a9b4386c8b9560b02d4e, type: 3}
   AddDamage: 20
   AddFireDelay: 0

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: GrenadeUnlock
   m_EditorClassIdentifier: 
   upgradeType: 2
-  Name: GrenadeThrower
+  ScriptName: GrenadeThrower
+  Name: Grenade Launcher
+  Description: Unlocks grenades (press g to throw)
   icon: {fileID: 21300000, guid: a0ec64ed040626c41a30d91791645bb0, type: 3}
   AddDamage: 0
   AddFireDelay: 0

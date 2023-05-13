@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: maxHealthUp
   m_EditorClassIdentifier: 
   upgradeType: 3
-  Name: AddMaxHealth
+  ScriptName: AddMaxHealth
+  Name: Vitality Boost
+  Description: Increase your maximum health by 20%
   icon: {fileID: 21300000, guid: 3bba55f83eab98d4ba185185e14dc121, type: 3}
   AddDamage: 0
   AddFireDelay: 0

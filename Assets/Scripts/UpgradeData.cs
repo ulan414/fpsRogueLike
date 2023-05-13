@@ -14,7 +14,9 @@ public enum UpgradeType
 public class UpgradeData : ScriptableObject
 {
     public UpgradeType upgradeType;
+    public string ScriptName;
     public string Name;
+    public string Description;
     public Sprite icon;
     public int AddDamage;
     public int AddFireDelay;

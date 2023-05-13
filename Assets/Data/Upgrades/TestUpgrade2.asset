@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: TestUpgrade2
   m_EditorClassIdentifier: 
   upgradeType: 0
+  ScriptName: Test 2
   Name: Test 2
+  Description: 
   icon: {fileID: 21300000, guid: 658be47cf865c2646830e6ebcfdfefdf, type: 3}
+  AddDamage: 0
+  AddFireDelay: 0
+  Vampirism: 0
+  AddMaxHealth: 0
