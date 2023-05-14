@@ -20,6 +20,6 @@ public class UpgradeData : ScriptableObject
     public Sprite icon;
     public int AddDamage;
     public int AddFireDelay;
-    public float Vampirism;
+    public int AddVampHealth;
     public int AddMaxHealth;
 }

@@ -115,6 +115,7 @@ public class GameOverScreen : MonoBehaviour
         else if (upgradeData.upgradeType == UpgradeType.ItemUnlock)
         {
             PlayerHealth.AddMaxHealth(upgradeData.AddMaxHealth);
+            PlayerHealth.AddHealth(upgradeData.AddVampHealth);
         }
 
         acquiredUpgrades.Add(upgradeData);
