@@ -3,11 +3,11 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
-public sealed class AI : AIBehavior
+public sealed class AI : MonoBehaviour
 {
 	private float timer;
 	//public GameObject Player;
-	
+
 	public Transform shotPoint;
 	public Transform seePlayer;
 	public TrailRenderer bulletTrailFirstPart;
@@ -57,10 +57,12 @@ public sealed class AI : AIBehavior
 	bool playones = false;
 	Vector3 Player = new Vector3(0, 0, 0);
 	private Transform Player1;
+
+	private float wait = 2f;
 	// Start is called before the first frame update
 	void Start()
 	{
-		
+
 		nav = GetComponent<NavMeshAgent>();
 		if (sniper)
 		{
@@ -69,106 +71,111 @@ public sealed class AI : AIBehavior
 			laserLineRenderer.SetWidth(laserWidth, laserWidth);
 		}
 		Player1 = GameObject.FindGameObjectWithTag("Player").transform;
-		
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		wait -= Time.deltaTime;
+		if (wait > 0)
+			return;
 		//Vector3 Player = GameObject.FindGameObjectWithTag("Player").transform.position;
 		Vector3 Player = Player1.position;
 		if (!dying)
-        {
+		{
 			//make smthng
 			//return;
-        
-		//laser
-		dist = Vector3.Distance(Player, transform.position);
-		if (dist > radius)
-		{
-			Idle();
-		}
-		else if (dist < radius && dist > fireRadius)
-		{
-/*			nav.enabled = true;
-			nav.SetDestination(Player.transform.position);
-			gameObject.GetComponent<Animator>().SetBool("run_back", false);
-			gameObject.GetComponent<Animator>().SetBool("Fire", false);
-			gameObject.GetComponent<Animator>().SetBool("idle", false);
-			gameObject.GetComponent<Animator>().SetBool("run", true);*/
-		}
-		else if (dist < fireRadius) //&& dist > run_back
-		{
-			if (needToMove)
-			{
-				if (Time.time - needToMoveTime > 0.3f)
-				{
-					needToMove = false;
-				}
-			}
-            if (mustShoot)
-            {
-				if(Time.time - lastLaserTime > 1.5f)
-				{
-					mustShoot = false;
-					laserLineRenderer.enabled = false;
-				}
-			}
-			gameObject.GetComponent<Animator>().SetBool("run", false);
-			isReloading = false;
-			if (Shoot.ammunitionCurrent != Shoot.Ammo && Shoot.ammunitionCurrent < 1 && Shoot.ammunitionTotal != 0)
-			{
-				Shoot.Reload();
-				lastShootingTime = Time.time;
-				isReloading = true;
-			}
-			/*			transform.LookAt(Player.transform.position);
-						transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);*/
-			//shoot triger(raycast)
 
-			if (!mustShoot)
-			{
-				directionCor = (Player - seePlayer.transform.position + new Vector3(0, 1.7f, 0)).normalized;
-				//rotate character
-				directionCor1 = (Quaternion.AngleAxis(rotateAngle, transform.up) * (Player - seePlayer.transform.position + new Vector3(0, 1.1f, 0))).normalized;
-			}
-			else	
-            {
-				directionCor = directionCorMust;
-				directionCor1 = directionCorMust1;
-			}
-			Rotate(directionCor1);
-			if (sniper)
-			{
-				//rotateCs.SetDirection(directionCor);
-			}
-			//Debug.Log(Time.time - lastLaserTime);
-			/*			if (mustShoot)
-						{
-							Debug.Log("true");
-						}
-						else
-						{
-							Debug.Log("false");
-						}*/
 			//laser
-			if (dist < run_back)
+			dist = Vector3.Distance(Player, transform.position);
+			/*			if (dist >= radius)
+						{
+							Idle();
+						}
+						else */
+			if (/*dist < radius && */dist > fireRadius)
 			{
-				RunBackFromPlayer();
-			}
-			else
+				//run to the player
+                nav.enabled = true;
+                nav.SetDestination(Player1.transform.position);
+                gameObject.GetComponent<Animator>().SetBool("run_back", false);
+                gameObject.GetComponent<Animator>().SetBool("Fire", false);
+                gameObject.GetComponent<Animator>().SetBool("idle", false);
+                gameObject.GetComponent<Animator>().SetBool("run", true);
+            }
+			else if (dist <= fireRadius) //&& dist > run_back
 			{
-				//nav.enabled = false;
-				gameObject.GetComponent<Animator>().SetBool("run_back", false);
+				if (needToMove)
+				{
+					if (Time.time - needToMoveTime > 0.3f)
+					{
+						needToMove = false;
+					}
+				}
+				if (mustShoot)
+				{
+					if (Time.time - lastLaserTime > 1.5f)
+					{
+						mustShoot = false;
+						laserLineRenderer.enabled = false;
+					}
+				}
 				gameObject.GetComponent<Animator>().SetBool("run", false);
-				gameObject.GetComponent<Animator>().SetBool("idle", false);
+				isReloading = false;
+				if (Shoot.ammunitionCurrent != Shoot.Ammo && Shoot.ammunitionCurrent < 1 && Shoot.ammunitionTotal != 0)
+				{
+					Shoot.Reload();
+					lastShootingTime = Time.time;
+					isReloading = true;
+				}
+				/*			transform.LookAt(Player.transform.position);
+							transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);*/
+				//shoot triger(raycast)
 
-				Ray raySeePlayer = new Ray();
-				//raySeePlayer.origin = transform.position + new Vector3(0.18f, 1.1f, 0);
-				raySeePlayer.origin = seePlayer.transform.position;
-				raySeePlayer.direction = directionCor;
-				//Debug.DrawRay(raySeePlayer.origin, directionCor * fireRadius, Color.blue);
-				RaycastHit hit;
+				if (!mustShoot)
+				{
+					directionCor = (Player - seePlayer.transform.position + new Vector3(0, 1.7f, 0)).normalized;
+					//rotate character
+					directionCor1 = (Quaternion.AngleAxis(rotateAngle, transform.up) * (Player - seePlayer.transform.position + new Vector3(0, 1.1f, 0))).normalized;
+				}
+				else
+				{
+					directionCor = directionCorMust;
+					directionCor1 = directionCorMust1;
+				}
+				Rotate(directionCor1);
+				if (sniper)
+				{
+					//rotateCs.SetDirection(directionCor);
+				}
+				//Debug.Log(Time.time - lastLaserTime);
+				/*			if (mustShoot)
+							{
+								Debug.Log("true");
+							}
+							else
+							{
+								Debug.Log("false");
+							}*/
+				//laser
+				if (dist < run_back)
+				{
+					RunBackFromPlayer();
+				}
+				else
+				{
+					//nav.enabled = false;
+					gameObject.GetComponent<Animator>().SetBool("run_back", false);
+					gameObject.GetComponent<Animator>().SetBool("run", false);
+					gameObject.GetComponent<Animator>().SetBool("idle", false);
+
+					Ray raySeePlayer = new Ray();
+					//raySeePlayer.origin = transform.position + new Vector3(0.18f, 1.1f, 0);
+					raySeePlayer.origin = seePlayer.transform.position;
+					raySeePlayer.direction = directionCor;
+					//Debug.DrawRay(raySeePlayer.origin, directionCor * fireRadius, Color.blue);
+					RaycastHit hit;
 					if (Physics.Raycast(raySeePlayer, out hit))
 					{
 						if ((hit.collider.tag == "Player"))
@@ -227,12 +234,12 @@ public sealed class AI : AIBehavior
 								Ray raySeePlayerM4 = new Ray();
 								raySeePlayerM4.origin = shotPoint.transform.position;
 								raySeePlayerM4.direction = shotPoint.forward;
-								//Debug.DrawRay(raySeePlayerM4.origin, raySeePlayerM4.direction * 100f, Color.green);
+								/*Debug.DrawRay(raySeePlayerM4.origin, raySeePlayerM4.direction * 100f, Color.green);*/
 								RaycastHit hittt;
-								if (Physics.Raycast(raySeePlayerM4, out hittt))
+/*								if (Physics.Raycast(raySeePlayerM4, out hittt))
 								{
 									if (hittt.collider.tag == "Player")
-									{
+									{*/
 										Shoot.shot();
 										mustShoot = false;
 										isShooting = true;
@@ -241,15 +248,15 @@ public sealed class AI : AIBehavior
 										{
 											gameObject.GetComponent<Animator>().SetBool("run_back", false);
 											gameObject.GetComponent<Animator>().SetBool("Fire", false);
-											gameObject.GetComponent<Animator>().SetBool("idle", true);
+											gameObject.GetComponent<Animator>().SetBool("idle", false);
 											laserLineRenderer.enabled = false;
 										}
-									}
+/*									}
 									else
 									{
 										isShooting = false;
 									}
-								}
+								}*/
 							}
 
 						}
@@ -265,8 +272,8 @@ public sealed class AI : AIBehavior
 								isShooting = true;
 								lastShootingTime = Time.time;
 								gameObject.GetComponent<Animator>().SetBool("run_back", false);
-								gameObject.GetComponent<Animator>().SetBool("Fire", false);
-								gameObject.GetComponent<Animator>().SetBool("idle", true);
+								gameObject.GetComponent<Animator>().SetBool("Fire", true);
+								gameObject.GetComponent<Animator>().SetBool("idle", false);
 								laserLineRenderer.enabled = false;
 							}
 						}
@@ -293,29 +300,29 @@ public sealed class AI : AIBehavior
 								gameObject.GetComponent<Animator>().SetBool("run_back", false);
 								gameObject.GetComponent<Animator>().SetBool("Fire", false);
 								gameObject.GetComponent<Animator>().SetBool("idle", false);
-								gameObject.GetComponent<Animator>().SetBool("run", true);
+								gameObject.GetComponent<Animator>().SetBool("run", false);
 							}
 							else if (!hasSeenPlayer && !mustShoot)
 							{
 								gameObject.GetComponent<Animator>().SetBool("run_back", false);
 								gameObject.GetComponent<Animator>().SetBool("run", false);
-								gameObject.GetComponent<Animator>().SetBool("idle", true);
+								gameObject.GetComponent<Animator>().SetBool("idle", false);
 								nav.enabled = false;
 							}
 						}
-						//if raycast can see the player but bot isnt shooting because raycast from the gun cannot see the player, so he must move (0.3f secs)
-						if (gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Firing_Rifle") && !isShooting && (Time.time - lastShootingTime > 2.3f) && lastShootingTime != 0f && !mustShoot)
-						{
-							needToMove = true;
-							needToMoveTime = Time.time;
-							nav.enabled = true;
-							nav.SetDestination(Player);
-							gameObject.GetComponent<Animator>().SetBool("run_back", false);
-							gameObject.GetComponent<Animator>().SetBool("Fire", false);
-							gameObject.GetComponent<Animator>().SetBool("idle", false);
-							gameObject.GetComponent<Animator>().SetBool("run", true);
-						}
-					}
+                        //if raycast can see the player but bot isnt shooting because raycast from the gun cannot see the player, so he must move (0.3f secs)
+                        if (gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Firing_Rifle") && !isShooting && (Time.time - lastShootingTime > 2.3f) && lastShootingTime != 0f && !mustShoot)
+                        {
+                            needToMove = true;
+                            needToMoveTime = Time.time;
+                            nav.enabled = true;
+                            nav.SetDestination(Player);
+                            gameObject.GetComponent<Animator>().SetBool("run_back", false);
+                            gameObject.GetComponent<Animator>().SetBool("Fire", false);
+                            gameObject.GetComponent<Animator>().SetBool("idle", false);
+                            gameObject.GetComponent<Animator>().SetBool("run", false);
+                        }
+                    }
 					else if (mustShoot)
 					{
 						elapsed += Time.deltaTime;
@@ -328,15 +335,16 @@ public sealed class AI : AIBehavior
 							lastShootingTime = Time.time;
 							gameObject.GetComponent<Animator>().SetBool("run_back", false);
 							gameObject.GetComponent<Animator>().SetBool("Fire", false);
-							gameObject.GetComponent<Animator>().SetBool("idle", true);
+							gameObject.GetComponent<Animator>().SetBool("idle", false);
 							laserLineRenderer.enabled = false;
 						}
 					}
 				}
-            }
+			}
 		}
 		else
 		{
+
 			laserLineRenderer.enabled = false;
 			nav.enabled = false;
 			gameObject.GetComponent<Animator>().SetBool("dying", true);
@@ -389,7 +397,7 @@ public sealed class AI : AIBehavior
 		laserLineRenderer.SetPosition(1, endPosition);
 	}
 	void Idle()
-    {
+	{
 		nav.enabled = false;
 		gameObject.GetComponent<Animator>().SetBool("run_back", false);
 		gameObject.GetComponent<Animator>().SetBool("Fire", false);
@@ -397,7 +405,7 @@ public sealed class AI : AIBehavior
 		gameObject.GetComponent<Animator>().SetBool("idle", true);
 	}
 	void RunBackFromPlayer()
-    {
+	{
 		if (!isReloading)
 		{
 			nav.enabled = true;
@@ -408,14 +416,14 @@ public sealed class AI : AIBehavior
 			gameObject.GetComponent<Animator>().SetBool("Fire", false);
 			gameObject.GetComponent<Animator>().SetBool("idle", false);
 			gameObject.GetComponent<Animator>().SetBool("reloading", false);
-        }
-        else
-        {
+		}
+		else
+		{
 			nav.enabled = false;
 		}
 	}
 }
-		
+
 
 /*	void OnTriggerStay(Collider col)
 	{
@@ -445,5 +453,4 @@ public sealed class AI : AIBehavior
 			PLS.enabled = false;
 		}
 	}*/
-
 

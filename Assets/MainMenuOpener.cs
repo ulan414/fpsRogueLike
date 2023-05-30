@@ -14,8 +14,6 @@ public class MainMenuOpener : MonoBehaviour
         pauseManager = GetComponent<PauseManager>();
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

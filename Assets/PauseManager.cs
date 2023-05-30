@@ -23,7 +23,6 @@ public class PauseManager : MonoBehaviour
     {
         if (!panelOpened)
         {
-            Debug.Log("normal time");
             Time.timeScale = 1f;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

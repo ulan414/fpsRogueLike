@@ -40,10 +40,7 @@ public class Health : MonoBehaviour
             }
             else
             {
-                //make smthng with player after death
                 GameOverScreen.Setup();
-                //myScript = gameObject.GetComponent<Movement>();
-                //gameObject.GetComponent<Character>().enabled = false;
                 if (Bot != null)
                 {
                     Destroy(Bot.gameObject);

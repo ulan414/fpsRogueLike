@@ -24,7 +24,11 @@ public class WaveSpawner : MonoBehaviour
     private float searchCountDown = 1f;
 
     private SpawnState state = SpawnState.COUNTING;
-    
+
+    public Transform player;
+    public float minRadius = 5f;
+    public float maxRadius = 10f;
+
     void Start()
     {
         waveCountDown = timeBetweenWaves;
@@ -93,7 +97,9 @@ public class WaveSpawner : MonoBehaviour
     }
     void SpawnEnemy(Transform _enemy)
     {
-        Instantiate(_enemy, new Vector3(-320, 70, 10), transform.rotation);
+        Vector2 randomOffset = Random.insideUnitCircle.normalized * Random.Range(minRadius, maxRadius);
+        Vector3 spawnPosition = player.position + new Vector3(randomOffset.x, 0.1f, randomOffset.y);
+        Instantiate(_enemy, spawnPosition, transform.rotation);
         Debug.Log("Spawning enemy: " + _enemy.name);
     }
 }
