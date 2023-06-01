@@ -15,15 +15,23 @@ public class GameOverScreen : MonoBehaviour
 
     public Health PlayerHealth;
 
+    [SerializeField] ExpBar expBar;
+
     [SerializeField] UpgradePanelManager upgradePanelManager;
     [SerializeField] PauseManager pauseManager;
     public Text pointsText;
     public int points = 0;
-    public int level = 0;
+    public int level = 1;
 
     [SerializeField] List<UpgradeData> upgrades;
     List<UpgradeData> selectedUpgrades;
     [SerializeField] List<UpgradeData> acquiredUpgrades;
+
+    void Start()
+    {
+        expBar.UpdateExpSlider(points, ToLevelUp);
+        expBar.UpdateLevelText(level);
+    }
 
     public void Setup()
     {
@@ -44,15 +52,29 @@ public class GameOverScreen : MonoBehaviour
     public void AddPoints(int point)
     {
         points = points + point;
-        if(points == 2)
+        CheckLevelUp();
+        expBar.UpdateExpSlider(points, ToLevelUp);
+    }
+    int ToLevelUp
+    {
+        get
         {
-            if(selectedUpgrades == null) { selectedUpgrades = new List<UpgradeData>(); }
+            return 1 + level;
+        }
+    }
+    public void CheckLevelUp()
+    {
+        if(points >= ToLevelUp)
+        {
+            if (selectedUpgrades == null) { selectedUpgrades = new List<UpgradeData>(); }
             selectedUpgrades.Clear();
             selectedUpgrades.AddRange(GetUpgrades(4));
 
             upgradePanelManager.OpenPanel(selectedUpgrades);
-            points = 0;
+
+            points -= ToLevelUp;
             level++;
+            expBar.UpdateLevelText(level);
         }
     }
 

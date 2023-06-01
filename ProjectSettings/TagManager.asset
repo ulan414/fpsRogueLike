@@ -11,6 +11,8 @@ TagManager:
   - sand
   - Head
   - DeathScreen
+  - Concrete
+  - Buy
   layers:
   - Default
   - TransparentFX

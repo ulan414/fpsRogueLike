@@ -136,11 +136,11 @@ namespace InfimaGames.LowPolyShooterPack
         /// The player character's camera.
         /// </summary>
         private Transform playerCamera;
-        
+
         #endregion
 
         #region UNITY
-        
+
         protected override void Awake()
         {
             //Get Animator.
@@ -275,6 +275,13 @@ namespace InfimaGames.LowPolyShooterPack
                 {
                     Health health = hit.collider.gameObject.GetComponentInParent<Health>();
                     health.TakeDammage(damageHead);
+                }
+                else if (hit.collider.tag == "Buy")
+                {
+                    Debug.Log("Buy");
+
+                    BuyInHub buyInHub = hit.collider.gameObject.GetComponent<BuyInHub>();
+                    buyInHub.CanBuy();
                 }
             }
 
