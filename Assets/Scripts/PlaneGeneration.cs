@@ -77,4 +77,8 @@ public class PlaneGeneration : MonoBehaviour
         }
         return false;
     }
+    public void removeTileFromHash(Vector3 pos)
+    {
+        tilePlane.Remove(pos);
+    }
 }

@@ -213,16 +213,24 @@ namespace InfimaGames.LowPolyShooterPack
                 {
                     //Play Reload Animation.
                     animator.Play(HasAmmunition() ? "Reload" : "Reload Empty", 0, 0.0f);
-                    if (ammunitionCurrent + magazineBehaviour.GetAmmunitionTotal() >= magazineBehaviour.GetAmmo())
+                    //if gun
+                    if (automatic)
                     {
-                        magazineBehaviour.SetAmmunitionTotal(magazineBehaviour.GetAmmunitionTotal() - (magazineBehaviour.GetAmmo() - ammunitionCurrent));
-                        //Update the value by a certain amount.
-                        ammunitionCurrent = magazineBehaviour.GetAmmo();
-                    }
+                        if (ammunitionCurrent + magazineBehaviour.GetAmmunitionTotal() >= magazineBehaviour.GetAmmo())
+                        {
+                            magazineBehaviour.SetAmmunitionTotal(magazineBehaviour.GetAmmunitionTotal() - (magazineBehaviour.GetAmmo() - ammunitionCurrent));
+                            //Update the value by a certain amount.
+                            ammunitionCurrent = magazineBehaviour.GetAmmo();
+                        }
+                        else
+                        {
+                            ammunitionCurrent = ammunitionCurrent + magazineBehaviour.GetAmmunitionTotal();
+                            magazineBehaviour.SetAmmunitionTotal(0);
+                        }
+                    }//if pistol
                     else
                     {
-                        ammunitionCurrent = ammunitionCurrent + magazineBehaviour.GetAmmunitionTotal();
-                        magazineBehaviour.SetAmmunitionTotal(0);
+                        ammunitionCurrent = magazineBehaviour.GetAmmo();
                     }
                 }
             }

@@ -21,9 +21,14 @@ public class BuyInHub : Balance
     {
         Debug.Log("bought");
         balance -= cost;
+        Upgrade();
     }
     void CannotBuy()
     {
         Debug.Log("cannot buy");
+    }
+    void Upgrade()
+    {
+
     }
 }
