@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("procedural");
+        SceneManager.LoadScene("Hub");
     }
 
     public void QuitGame()

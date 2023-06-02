@@ -13,6 +13,7 @@ TagManager:
   - DeathScreen
   - Concrete
   - Buy
+  - StartGame
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Ground
   - Postprocessing
   - Bot
-  - 
+  - Plane
   - 
   - 
   - 

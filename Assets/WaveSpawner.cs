@@ -18,7 +18,7 @@ public class WaveSpawner : MonoBehaviour
     public Wave[] waves;
     private int nextWave = -1;
 
-    public float timeBetweenWaves = 5f;
+    public float timeBetweenWaves = 3f;
     public float waveCountDown;
 
     private float searchCountDown = 1f;
@@ -89,7 +89,7 @@ public class WaveSpawner : MonoBehaviour
         for(int i = 0; i < _wave.count; i++)
         {
             SpawnEnemy(_wave.enemy);
-            yield return new WaitForSeconds(1f / _wave.rate);
+            yield return new WaitForSeconds(_wave.rate);
         }
         state = SpawnState.WAITING;
 

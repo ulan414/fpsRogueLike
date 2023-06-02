@@ -77,10 +77,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6268844630653304657, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2468408802058068775, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 270668371211418519, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 849374482491926735, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 822bcf68872cbf1419bd48d7587de4af,
         type: 3}
       propertyPath: m_Name
-      value: grenade
+      value: grenade Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 822bcf68872cbf1419bd48d7587de4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 822bcf68872cbf1419bd48d7587de4af, type: 3}

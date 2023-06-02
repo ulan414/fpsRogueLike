@@ -13,6 +13,7 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// Contains data related to playing a OneShot audio.
         /// </summary>
+
         private readonly struct OneShotCoroutine
         {
             /// <summary>
@@ -47,18 +48,24 @@ namespace InfimaGames.LowPolyShooterPack
         /// </summary>
         private IEnumerator DestroySourceWhenFinished(AudioSource source)
         {
-            //Wait for the audio source to complete playing the clip.
-            yield return new WaitWhile(() => source.isPlaying);
-            
-            //Destroy the audio game object, since we're not using it anymore.
-            //This isn't really too great for performance, but it works, for now.
-            DestroyImmediate(source.gameObject);
+            if (source != null)
+            {
+                //Wait for the audio source to complete playing the clip.
+                yield return new WaitWhile(() => source != null && source.isPlaying);
+
+                //Destroy the audio game object, since we're not using it anymore.
+                //This isn't really too great for performance, but it works, for now.
+                if (source != null)
+                {
+                    Destroy(source.gameObject);
+                }
+            }
         }
 
-        /// <summary>
-        /// Waits for a certain amount of time before starting to play a one shot sound.
-        /// </summary>
-        private IEnumerator PlayOneShotAfterDelay(OneShotCoroutine value)
+            /// <summary>
+            /// Waits for a certain amount of time before starting to play a one shot sound.
+            /// </summary>
+            private IEnumerator PlayOneShotAfterDelay(OneShotCoroutine value)
         {
             //Wait for the delay.
             yield return new WaitForSeconds(value.Delay);
@@ -87,11 +94,12 @@ namespace InfimaGames.LowPolyShooterPack
             
             //Play the clip!
             newAudioSource.PlayOneShot(clip);
-            
+
             //Start a coroutine that will destroy the whole object once it is done!
-            if(settings.AutomaticCleanup)
+            if (settings.AutomaticCleanup)
                 StartCoroutine(nameof(DestroySourceWhenFinished), newAudioSource);
         }
+
 
         #region Audio Manager Service Interface
 

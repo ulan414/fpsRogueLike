@@ -1,5 +1,4 @@
 ﻿// Copyright 2021, Infima Games. All Rights Reserved.
-
 using UnityEngine;
 
 namespace InfimaGames.LowPolyShooterPack
@@ -136,6 +135,8 @@ namespace InfimaGames.LowPolyShooterPack
         /// The player character's camera.
         /// </summary>
         private Transform playerCamera;
+
+        public LevelLoader levelLoader;
 
         #endregion
 
@@ -291,6 +292,10 @@ namespace InfimaGames.LowPolyShooterPack
                     BuyInHub buyInHub = hit.collider.gameObject.GetComponent<BuyInHub>();
                     buyInHub.CanBuy();
                 }
+                else if (hit.collider.tag == "StartGame")
+                {
+                    levelLoader.LoadLevel();
+                }
             }
 
             //Spawn projectile from the projectile spawn point.
@@ -299,7 +304,7 @@ namespace InfimaGames.LowPolyShooterPack
             projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * projectileImpulse;   
 
         }
-
+        
         public override void FillAmmunition(int amount)
         {
            // if (ammunitionCurrent+magazineBehaviour.GetAmmunitionTotal() >= 30)
