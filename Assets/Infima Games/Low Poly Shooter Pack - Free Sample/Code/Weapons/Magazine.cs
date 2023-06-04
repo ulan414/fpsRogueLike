@@ -42,6 +42,10 @@ namespace InfimaGames.LowPolyShooterPack
         /// </summary>
         public override Sprite GetSprite() => sprite;
 
+        public void setAmmo(int bullets)
+        {
+            Ammo += bullets;
+        }
         #endregion
     }
 }

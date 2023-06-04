@@ -9,7 +9,8 @@ public class Grenade : MonoBehaviour
     public float force = 700f;
     float countDown;
     bool hasExploded = false;
-
+    float blasterMultiplier = 1f;
+    float damage = 0;
     public GameObject explosionEffect;
     // Start is called before the first frame update
     void Start()
@@ -45,14 +46,17 @@ public class Grenade : MonoBehaviour
             //damage
             float dist = (Vector3.Distance(nearbyObject.bounds.center, transform.position) + 1f);
             Health health = nearbyObject.GetComponent<Health>();
+            damage = (100f / dist) * blasterMultiplier;
             if (health != null)
             {
-                Debug.Log("dist: " + dist);
-                health.TakeDammage(100 / (int)dist);
-                Debug.Log("damage: " + 100 / (int)dist);
+                health.TakeDammage(Mathf.RoundToInt(damage));
             }
         }
 
         Destroy(gameObject);
+    }
+    public void Blaster(float percentage)
+    {
+        blasterMultiplier += percentage/100;
     }
 }

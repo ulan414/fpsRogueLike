@@ -3,54 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using InfimaGames.LowPolyShooterPack;
 
-public class BuyInHub : MonoBehaviour
+public class RetrieveAllGrades : MonoBehaviour
 {
-    [SerializeField] Balance balance;
-    int cost = 1000;
-    public int ID = 0;
-    int gradeLevel = 0;
     int counter = 0;
+
     [SerializeField] Weapon gun;
     [SerializeField] Weapon pistol;
     [SerializeField] Magazine magazineMain;
     [SerializeField] Magazine magazineSecondary;
     [SerializeField] Grenade greanade;
-    //int balance = 0;
-    public void CanBuy()
+
+    void Start()
     {
-        Debug.Log(ID);
-        if (balance.money >= cost)
+        //getUpgrades that you buy in hub
+        RetrieveUpgrades();
+    }
+
+    void RetrieveUpgrades()
+    {
+        if (PlayerPrefs.HasKey("AmountOfGrades"))
         {
-            Buy();
+            counter = PlayerPrefs.GetInt("AmountOfGrades");
         }
         else
         {
-            CannotBuy();
-        }
-    }
-    void Buy()
-    {
-        if (gradeLevel > 4)
             return;
-        gradeLevel++;
-        Debug.Log("bought");
-        balance.money -= cost;
-        Upgrade();
-        //enable star
-        Transform childTransform = transform.Find("Stars/" + gradeLevel + "/star_full");
-        if (childTransform != null)
-        {
-            GameObject childObject = childTransform.gameObject;
-            childObject.SetActive(true);
         }
-        balance.UpdateBalance();
-        SaveUpgrades(ID, gradeLevel);
+        for (int i = 0; i < counter; i++)
+        {
+            string Id = i.ToString();
+            if (PlayerPrefs.HasKey(Id))
+            {
+                int gradeLevel = PlayerPrefs.GetInt(Id);
+                for(int j = 0; j < gradeLevel; j++)
+                {
+                    Upgrade(i);
+                }
+            }
+        }
     }
-    void CannotBuy()
-    {
-        Debug.Log("cannot buy");
-    }
-    void Upgrade()
+    void Upgrade(int ID)
     {
         switch (ID)
         {
@@ -93,15 +85,5 @@ public class BuyInHub : MonoBehaviour
                 Debug.Log("Number is not between 1 and 10");
                 break;
         }
-    }
-    void SaveUpgrades(int id, int gradeLevel)
-    {
-        string Id = id.ToString();
-        PlayerPrefs.SetInt(Id, gradeLevel);
-
-        counter++;
-        if(PlayerPrefs.HasKey("AmountOfGrades"))
-            counter += PlayerPrefs.GetInt("AmountOfGrades");
-        PlayerPrefs.SetInt("AmountOfGrades", counter);
     }
 }
