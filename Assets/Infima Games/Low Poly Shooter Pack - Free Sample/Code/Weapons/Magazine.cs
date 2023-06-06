@@ -46,6 +46,10 @@ namespace InfimaGames.LowPolyShooterPack
         {
             Ammo += bullets;
         }
+        public void setAmmoTotal(int bullets)
+        {
+            ammunitionTotal += bullets;
+        }
         #endregion
     }
 }

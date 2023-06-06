@@ -86,4 +86,8 @@ public class RetrieveAllGrades : MonoBehaviour
                 break;
         }
     }
+    public void AddTotalAmmoGun(int bullets)
+    {
+        magazineMain.setAmmoTotal(bullets);
+    }
 }

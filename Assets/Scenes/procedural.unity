@@ -19083,21 +19083,21 @@ MonoBehaviour:
   waves:
   - name: swat
     enemy: {fileID: 1812722235457562119, guid: 672859ab7b512f343b6cef14022521b2, type: 3}
-    count: 2
+    count: 10
     rate: 0.1
   - name: sniper
     enemy: {fileID: 243617266342962301, guid: 071196fbea05f6149be4cfa8c9e33943, type: 3}
-    count: 2
+    count: 15
     rate: 0.1
   - name: swat
     enemy: {fileID: 1812722235457562119, guid: 672859ab7b512f343b6cef14022521b2, type: 3}
-    count: 3
+    count: 15
     rate: 0.1
   timeBetweenWaves: 3
   waveCountDown: 0
   player: {fileID: 1696702985}
-  minRadius: 5
-  maxRadius: 10
+  minRadius: 15
+  maxRadius: 50
 --- !u!114 &2143896306
 MonoBehaviour:
   m_ObjectHideFlags: 0

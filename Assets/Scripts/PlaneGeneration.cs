@@ -23,9 +23,13 @@ public class PlaneGeneration : MonoBehaviour
 
     Hashtable tilePlane = new Hashtable();
 
+    float delay = 0.2f;
+    int start = 0;
     void Update()
     {
         generateWorld();
+        if(delay >= 0)
+            delay -= Time.deltaTime;
     }
 
     private void generateWorld()
@@ -42,9 +46,14 @@ public class PlaneGeneration : MonoBehaviour
 
                     if (!tilePlane.Contains(pos))
                     {
-                        GameObject tile = Instantiate(plane, pos, Quaternion.identity);
-                        tilePlane.Add(pos, tile);
-                        navMeshSurface.BuildNavMesh();
+                        if (start <100 || delay < 0f)
+                        {
+                            GameObject tile = Instantiate(plane, pos, Quaternion.identity);
+                            tilePlane.Add(pos, tile);
+                            navMeshSurface.BuildNavMesh();
+                            delay = 0.2f;
+                            start++;
+                        }
                     }
                 }
             }

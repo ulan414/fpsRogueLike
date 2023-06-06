@@ -26,8 +26,8 @@ public class WaveSpawner : MonoBehaviour
     private SpawnState state = SpawnState.COUNTING;
 
     public Transform player;
-    public float minRadius = 5f;
-    public float maxRadius = 10f;
+    public float minRadius = 15f;
+    public float maxRadius = 50f;
 
     void Start()
     {
