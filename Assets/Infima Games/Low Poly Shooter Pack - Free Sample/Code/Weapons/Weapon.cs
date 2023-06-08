@@ -138,6 +138,8 @@ namespace InfimaGames.LowPolyShooterPack
 
         public LevelLoader levelLoader;
 
+        public ChangeLevels changeLevels;
+
         #endregion
 
         #region UNITY
@@ -295,6 +297,14 @@ namespace InfimaGames.LowPolyShooterPack
                 else if (hit.collider.tag == "StartGame")
                 {
                     levelLoader.LoadLevel();
+                }
+                else if (hit.collider.tag == "LeftArrow")
+                {
+                    changeLevels.Left();
+                }
+                else if (hit.collider.tag == "RightArrow")
+                {
+                    changeLevels.Right();
                 }
             }
 

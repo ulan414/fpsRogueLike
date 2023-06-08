@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using InfimaGames.LowPolyShooterPack;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MainMenuOpener : MonoBehaviour
 {
@@ -39,5 +40,13 @@ public class MainMenuOpener : MonoBehaviour
     {
         pauseManager.PauseGame();
         panel.SetActive(true);
+    }
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void GoToHub()
+    {
+        SceneManager.LoadScene("Hub");
     }
 }

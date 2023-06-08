@@ -59,6 +59,7 @@ public class WaveSpawner : MonoBehaviour
                 else
                 {
                     Debug.Log("You win!!!");
+                    PlayerPrefs.SetInt("AddMoney", 3000);
                 }
             }
         }

@@ -14,6 +14,8 @@ TagManager:
   - Concrete
   - Buy
   - StartGame
+  - LeftArrow
+  - RightArrow
   layers:
   - Default
   - TransparentFX

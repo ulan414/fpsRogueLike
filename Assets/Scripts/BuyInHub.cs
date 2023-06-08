@@ -16,9 +16,58 @@ public class BuyInHub : MonoBehaviour
     [SerializeField] Magazine magazineSecondary;
     [SerializeField] Grenade greanade;
     //int balance = 0;
+
+    void Start()
+    {
+        /*        if (PlayerPrefs.HasKey("AmountOfGrades"))
+                {
+                    counter = PlayerPrefs.GetInt("AmountOfGrades");
+                }
+                else
+                {
+                    return;
+                }
+                for (int i = 0; i < counter; i++)
+                {
+                    string Id = i.ToString();
+                    if (PlayerPrefs.HasKey(Id))
+                    {
+                        int gradeLevel = PlayerPrefs.GetInt(Id);
+                        for (int j = 1; j < gradeLevel + 1; j++)
+                        {
+                            Upgrade();
+                            //enable star
+                            Transform childTransform = transform.Find("Stars/" + gradeLevel + "/star_full");
+                            if (childTransform != null)
+                            {
+                                GameObject childObject = childTransform.gameObject;
+                                childObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                counter = PlayerPrefs.GetInt("");
+                counter = 0;*/
+        if (!PlayerPrefs.HasKey(ID.ToString()))
+        {
+            return;
+        }
+            int gradeLevel = PlayerPrefs.GetInt(ID.ToString());
+        Debug.Log("ID: " + ID.ToString() + " gradeLevel: " + gradeLevel);
+        for (int j = 1; j < gradeLevel + 1; j++)
+        {
+            Upgrade();
+            //enable star
+            Transform childTransform = transform.Find("Stars/" + j + "/star_full");
+            if (childTransform != null)
+            {
+                GameObject childObject = childTransform.gameObject;
+                childObject.SetActive(true);
+            }
+        }
+    }
     public void CanBuy()
     {
-        Debug.Log(ID);
         if (balance.money >= cost)
         {
             Buy();

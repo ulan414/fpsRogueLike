@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/procedural.unity
     guid: c3d85e6da4008f24884fb1403d0808fd
+  - enabled: 1
+    path: Assets/Scenes/City.unity
+    guid: f051365c3d9f2c34da49d0aa0945c879
   m_configObjects: {}
